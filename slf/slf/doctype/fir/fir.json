@@ -1,0 +1,277 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "UUID",
+ "creation": "2025-02-19 17:07:31.428515",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "fir_no",
+  "accident_date",
+  "time",
+  "accident_timezone",
+  "column_break_jyov",
+  "section",
+  "month",
+  "year",
+  "crash_location",
+  "section_break_5pqy",
+  "police_jurisdiction",
+  "district",
+  "road_name",
+  "lat_long",
+  "road_feature",
+  "no_of_fatalities",
+  "fir_pdf",
+  "pdf_viewer",
+  "nearest_location",
+  "column_break_twgu",
+  "no_of_grievously_injured",
+  "no_of_minor_injury",
+  "no_of_total_injuries",
+  "no_of_motor_vehicles_involved",
+  "no_of_non_motor_involved",
+  "no_of_pedestrians",
+  "crash_between",
+  "crash_configuration",
+  "vehicle_1",
+  "higest_injury_in_vehicle_1",
+  "vehicle_2",
+  "higest_injury_in_vehicle_2",
+  "vehicle_3",
+  "higest_injury_in_vehicle_3",
+  "crash_contributing_factor",
+  "injury_contributing_factor",
+  "fir_summary",
+  "md_content",
+  "md_viewer"
+ ],
+ "fields": [
+  {
+   "fieldname": "time",
+   "fieldtype": "Data",
+   "label": "Accident Time (HH:MM)"
+  },
+  {
+   "fieldname": "fir_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "FIR no"
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Section"
+  },
+  {
+   "fieldname": "accident_date",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Accident Date (DD-MM-YYYY))"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Data",
+   "label": "Month"
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Data",
+   "label": "Year"
+  },
+  {
+   "fieldname": "accident_timezone",
+   "fieldtype": "Data",
+   "label": "Accident Time Zone (3 hr)"
+  },
+  {
+   "fieldname": "police_jurisdiction",
+   "fieldtype": "Data",
+   "label": "Jurisdiction of Police Station"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "District"
+  },
+  {
+   "fieldname": "crash_location",
+   "fieldtype": "Data",
+   "label": "Name of Crash Location"
+  },
+  {
+   "fieldname": "road_name",
+   "fieldtype": "Data",
+   "label": "Road Name"
+  },
+  {
+   "fieldname": "lat_long",
+   "fieldtype": "Geolocation",
+   "label": "Latitude Longitude"
+  },
+  {
+   "fieldname": "road_feature",
+   "fieldtype": "Data",
+   "label": "Road Feature"
+  },
+  {
+   "fieldname": "no_of_fatalities",
+   "fieldtype": "Data",
+   "label": "Number of Fatalities"
+  },
+  {
+   "fieldname": "no_of_grievously_injured",
+   "fieldtype": "Data",
+   "label": "Number of Grievously Injured persons"
+  },
+  {
+   "fieldname": "no_of_minor_injury",
+   "fieldtype": "Data",
+   "label": "Number of people with Minor Injury"
+  },
+  {
+   "fieldname": "no_of_non_motor_involved",
+   "fieldtype": "Data",
+   "label": "Number of Non-motorised Vehicles involved"
+  },
+  {
+   "fieldname": "no_of_pedestrians",
+   "fieldtype": "Data",
+   "label": "Number of Pedestrians Involved"
+  },
+  {
+   "fieldname": "crash_between",
+   "fieldtype": "Data",
+   "label": "Crash Between"
+  },
+  {
+   "fieldname": "crash_configuration",
+   "fieldtype": "Data",
+   "label": "Crash Configuration"
+  },
+  {
+   "fieldname": "vehicle_1",
+   "fieldtype": "Data",
+   "label": "Vehicle 1"
+  },
+  {
+   "fieldname": "higest_injury_in_vehicle_1",
+   "fieldtype": "Data",
+   "label": "Higest Injury in Vehicle 1"
+  },
+  {
+   "fieldname": "vehicle_2",
+   "fieldtype": "Data",
+   "label": "Vehicle 2"
+  },
+  {
+   "fieldname": "higest_injury_in_vehicle_2",
+   "fieldtype": "Data",
+   "label": "Higest Injury in Vehicle 2"
+  },
+  {
+   "fieldname": "vehicle_3",
+   "fieldtype": "Data",
+   "label": "Vehicle 3"
+  },
+  {
+   "fieldname": "higest_injury_in_vehicle_3",
+   "fieldtype": "Data",
+   "label": "Higest Injury in Vehicle 3"
+  },
+  {
+   "fieldname": "crash_contributing_factor",
+   "fieldtype": "Data",
+   "label": "Crash Contributing Factor"
+  },
+  {
+   "fieldname": "injury_contributing_factor",
+   "fieldtype": "Data",
+   "label": "Injury Contributing Factor"
+  },
+  {
+   "fieldname": "fir_summary",
+   "fieldtype": "Long Text",
+   "label": "FIR Summary"
+  },
+  {
+   "fieldname": "column_break_twgu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_5pqy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "fir_pdf",
+   "fieldtype": "Attach",
+   "label": "FIR pdf"
+  },
+  {
+   "fieldname": "column_break_jyov",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "md_content",
+   "fieldtype": "Attach",
+   "label": "Md content"
+  },
+  {
+   "fieldname": "pdf_viewer",
+   "fieldtype": "HTML",
+   "label": "pdf_viewer"
+  },
+  {
+   "fieldname": "md_viewer",
+   "fieldtype": "HTML",
+   "label": "MD viewer"
+  },
+  {
+   "fieldname": "no_of_total_injuries",
+   "fieldtype": "Data",
+   "label": "Total number of Inuries"
+  },
+  {
+   "fieldname": "no_of_motor_vehicles_involved",
+   "fieldtype": "Data",
+   "label": "Number of Motor Vehicles involved"
+  },
+  {
+   "default": "<a href=\"https://maps.google.com\" target=\"_blank\">View Location</a>",
+   "fieldname": "nearest_location",
+   "fieldtype": "Read Only",
+   "ignore_xss_filter": 1,
+   "label": "Nearest location",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_published_field": "fir_no",
+ "links": [],
+ "modified": "2025-02-21 00:28:24.549923",
+ "modified_by": "Administrator",
+ "module": "Slf",
+ "name": "FIR",
+ "naming_rule": "UUID",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
