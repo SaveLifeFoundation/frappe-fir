@@ -26,7 +26,7 @@ function link_files_to_target_doctype(file, reference_name) {
 		callback: function (response) {
 			let doc_id = response.message.name;
 			frappe.msgprint(`Created a new entry for ${file.file_name} ${doc_id} in FIRs`);
-			extract_text_from_file(file.file_url, doc_id);
+			extract_text_from_edar_file(file.file_url, doc_id);
 		},
 	});
 }
@@ -34,6 +34,20 @@ function link_files_to_target_doctype(file, reference_name) {
 function extract_text_from_file(file_url, doc_id) {
 	frappe.call({
 		method: "slf.api.extract_text", // This will be your custom Python method
+		args: {
+			file_url: file_url,
+			doc_id: doc_id,
+		},
+		callback: function (response) {
+			frappe.msgprint(`Extracted text saved successfully!`);
+		},
+	});
+}
+
+
+function extract_text_from_edar_file(file_url, doc_id) {
+	frappe.call({
+		method: "slf.edar_api.extract_edar_text",
 		args: {
 			file_url: file_url,
 			doc_id: doc_id,

@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-24 12:47:00.852073",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "case_number",
+  "case_owner",
+  "project",
+  "number_of_events",
+  "number_of_vehicles",
+  "number_of_pedestrian",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "case_number",
+   "fieldtype": "Data",
+   "label": "Case number"
+  },
+  {
+   "fieldname": "case_owner",
+   "fieldtype": "Link",
+   "label": "Case Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Road projects"
+  },
+  {
+   "fieldname": "number_of_events",
+   "fieldtype": "Data",
+   "label": "Number of events"
+  },
+  {
+   "fieldname": "number_of_vehicles",
+   "fieldtype": "Data",
+   "label": "Number of vehicles"
+  },
+  {
+   "fieldname": "number_of_pedestrian",
+   "fieldtype": "Data",
+   "label": "Number of pedestrian"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nInactive\nParked"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-24 13:02:56.984982",
+ "modified_by": "Administrator",
+ "module": "Slf",
+ "name": "Fields form",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
