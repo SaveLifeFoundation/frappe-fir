@@ -1,36 +1,25 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "UUID",
- "creation": "2025-02-19 18:48:19.202990",
+ "creation": "2025-03-04 14:00:23.100803",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "fir_type",
-  "upload_pdf"
+  "section_break_uipi"
  ],
  "fields": [
   {
-   "fieldname": "upload_pdf",
-   "fieldtype": "Button",
-   "label": "Upload pdf"
-  },
-  {
-   "fieldname": "fir_type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "FIR type",
-   "options": "EDAR\nNon-EDAR",
-   "reqd": 1
+   "fieldname": "section_break_uipi",
+   "fieldtype": "Section Break"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-06 22:38:50.577119",
+ "modified": "2025-03-04 14:00:23.100803",
  "modified_by": "Administrator",
  "module": "Slf",
- "name": "pdf",
- "naming_rule": "UUID",
+ "name": "Crash form",
  "owner": "Administrator",
  "permissions": [
   {

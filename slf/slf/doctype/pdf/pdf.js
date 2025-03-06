@@ -8,13 +8,15 @@ frappe.ui.form.on("pdf", {
 				allowed_file_types: ["application/pdf"],
 			},
 			on_success: function (file_doc) {
-				link_files_to_target_doctype(file_doc, frm.doc.name);
+				link_files_to_target_doctype(file_doc, frm);
 			},
 		});
 	},
 });
 
-function link_files_to_target_doctype(file, reference_name) {
+function link_files_to_target_doctype(file, frm) {
+	let fir_type = frm.doc.fir_type || "Non-EDAR"; // Default to Non-EDAR if not selected
+
 	frappe.call({
 		method: "frappe.client.insert",
 		args: {
@@ -26,14 +28,20 @@ function link_files_to_target_doctype(file, reference_name) {
 		callback: function (response) {
 			let doc_id = response.message.name;
 			frappe.msgprint(`Created a new entry for ${file.file_name} ${doc_id} in FIRs`);
-			extract_text_from_edar_file(file.file_url, doc_id);
+
+			// Call the appropriate function based on the dropdown selection
+			if (fir_type === "EDAR") {
+				extract_text_from_edar_file(file.file_url, doc_id);
+			} else {
+				extract_text_from_file(file.file_url, doc_id);
+			}
 		},
 	});
 }
 
 function extract_text_from_file(file_url, doc_id) {
 	frappe.call({
-		method: "slf.api.extract_text", // This will be your custom Python method
+		method: "slf.api.extract_text", // Your custom Python method
 		args: {
 			file_url: file_url,
 			doc_id: doc_id,
@@ -43,7 +51,6 @@ function extract_text_from_file(file_url, doc_id) {
 		},
 	});
 }
-
 
 function extract_text_from_edar_file(file_url, doc_id) {
 	frappe.call({

@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_guest_to_view": 1,
  "allow_rename": 1,
  "autoname": "UUID",
  "creation": "2025-02-19 17:07:31.428515",
@@ -44,7 +45,8 @@
   "injury_contributing_factor",
   "fir_summary",
   "md_content",
-  "md_viewer"
+  "md_viewer",
+  "route"
  ],
  "fields": [
   {
@@ -57,7 +59,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "FIR No."
+   "label": "FIR No.",
+   "unique": 1
   },
   {
    "fieldname": "section",
@@ -248,12 +251,18 @@
    "ignore_xss_filter": 1,
    "label": "Nearest location",
    "read_only": 1
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Data",
+   "label": "Route"
   }
  ],
+ "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_published_field": "fir_no",
  "links": [],
- "modified": "2025-02-26 16:56:45.407484",
+ "modified": "2025-02-27 14:47:33.282518",
  "modified_by": "Administrator",
  "module": "Slf",
  "name": "FIR",
@@ -273,6 +282,8 @@
    "write": 1
   }
  ],
+ "route": "firlist",
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],

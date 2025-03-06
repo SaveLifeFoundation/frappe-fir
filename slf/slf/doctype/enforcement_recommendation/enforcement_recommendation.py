@@ -5,5 +5,5 @@
 from frappe.website.website_generator import WebsiteGenerator
 
 
-class FIR(WebsiteGenerator):
+class Enforcementrecommendation(WebsiteGenerator):
 	pass
