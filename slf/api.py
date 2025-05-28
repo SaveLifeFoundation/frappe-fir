@@ -21,7 +21,7 @@ async def process_ocr(file_path, doc_id):
             with open(file_path, "rb") as f:
                 llm_host = frappe.conf.llm_host
                 files = {"file": (os.path.basename(file_path), f, "application/pdf")}
-                response = await client.post(f"{llm_host}/marker-ocr", files=files)
+                response = await client.post(f"{llm_host}/marker-ocr", files=files, headers={"ngrok-skip-browser-warning": "true"})
                 response.raise_for_status()
                 ocr_result = response.json()
         
@@ -75,7 +75,7 @@ async def extract_structured_data(md_content):
 
         async with httpx.AsyncClient(timeout=900) as client:
             llm_host = frappe.conf.llm_host
-            response = await client.post(f"{llm_host}/ollama", json=payload)
+            response = await client.post(f"{llm_host}/ollama", json=payload, headers={"ngrok-skip-browser-warning": "true"})
             response.raise_for_status()
             json_output = response.json()
             raw_response = json_output["response"]
