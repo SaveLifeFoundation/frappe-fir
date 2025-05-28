@@ -46,7 +46,8 @@
   "fir_summary",
   "md_content",
   "md_viewer",
-  "route"
+  "route",
+  "ocr_status"
  ],
  "fields": [
   {
@@ -256,17 +257,21 @@
    "fieldname": "route",
    "fieldtype": "Data",
    "label": "Route"
+  },
+  {
+   "fieldname": "ocr_status",
+   "fieldtype": "Data",
+   "label": "OCR status"
   }
  ],
  "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_published_field": "fir_no",
  "links": [],
- "modified": "2025-02-27 14:47:33.282518",
- "modified_by": "Administrator",
+ "modified": "2025-05-28 21:36:07.860691",
+ "modified_by": "shamoon@projecttech4dev.org",
  "module": "Slf",
  "name": "FIR",
- "naming_rule": "UUID",
  "owner": "Administrator",
  "permissions": [
   {

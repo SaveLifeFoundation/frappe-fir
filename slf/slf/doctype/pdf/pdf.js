@@ -47,7 +47,7 @@ function extract_text_from_file(file_url, doc_id) {
 			doc_id: doc_id,
 		},
 		callback: function (response) {
-			frappe.msgprint(`Extracted text saved successfully!`);
+			frappe.msgprint(`File queued successfully!`);
 		},
 	});
 }

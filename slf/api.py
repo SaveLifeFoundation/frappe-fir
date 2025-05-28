@@ -2,26 +2,28 @@ import frappe
 import base64
 import json
 import os
-import asyncio
 import logging
 import httpx
-
 
 # Enable debug logging
 logging.basicConfig(level=logging.DEBUG)
 
-
-async def process_ocr(file_path, doc_id):
+def process_ocr(file_path, doc_id):
     """
     Process OCR using Marker OCR and extract structured data using OpenAI.
     """
     try:
+
+        doc = frappe.get_doc('FIR', doc_id)
+        doc.ocr_status = 'Started'
+        doc.save()
+        frappe.db.commit()
         # Extract text using Marker OCR
-        async with httpx.AsyncClient(timeout=900) as client:
+        with httpx.Client(timeout=900) as client:
             with open(file_path, "rb") as f:
                 llm_host = frappe.conf.llm_host
                 files = {"file": (os.path.basename(file_path), f, "application/pdf")}
-                response = await client.post(f"{llm_host}/marker-ocr", files=files, headers={"ngrok-skip-browser-warning": "true"})
+                response = client.post(f"{llm_host}/marker-ocr", files=files, headers={"ngrok-skip-browser-warning": "true"})
                 response.raise_for_status()
                 ocr_result = response.json()
         
@@ -30,20 +32,31 @@ async def process_ocr(file_path, doc_id):
         if not md_content:
             raise ValueError("No text content returned from Marker OCR.")
         
-
         # Upload the extracted content as a markdown file in Frappe
         file_url = upload_markdown_file(md_content, doc_id)
 
         # Process extracted text with OpenAI
-        json_output = await extract_structured_data(md_content)
+        json_output = extract_structured_data(md_content)
 
         # Save structured data into the FIR doctype
         save_fir_data(json_output, doc_id, file_url)
 
+        # Update the status in the FIR document to indicate completion
+        doc = frappe.get_doc('FIR', doc_id)
+        doc.ocr_status = 'Completed'
+        doc.save()
+        frappe.db.commit()
+
     except Exception as e:
+        # Update status to error in case of failure
+        doc = frappe.get_doc('FIR', doc_id)
+        doc.ocr_status = 'Error'
+        doc.save()
+        frappe.db.commit()
+        
         logging.error(f"Error in process_ocr: {str(e)}")
         frappe.log_error(f"Error in process_ocr: {str(e)}", "OCR Processing Error")
-
+        raise
 
 def upload_markdown_file(md_content, doc_id):
     """
@@ -64,8 +77,7 @@ def upload_markdown_file(md_content, doc_id):
         frappe.log_error(f"Error uploading markdown file: {str(e)}", "File Upload Error")
         return None
 
-
-async def extract_structured_data(md_content):
+def extract_structured_data(md_content):
     """
     Use FastAPI (Ollama) to process and extract structured JSON data from the extracted Markdown content.
     """
@@ -75,9 +87,9 @@ async def extract_structured_data(md_content):
         prompt = config.system_prompt
         payload = {"query": md_content, "system_prompt": prompt}
 
-        async with httpx.AsyncClient(timeout=900) as client:
+        with httpx.Client(timeout=900) as client:
             llm_host = frappe.conf.llm_host
-            response = await client.post(f"{llm_host}/ollama", json=payload, headers={"ngrok-skip-browser-warning": "true"})
+            response = client.post(f"{llm_host}/ollama", json=payload, headers={"ngrok-skip-browser-warning": "true"})
             response.raise_for_status()
             json_output = response.json()
             raw_response = json_output["response"]
@@ -90,7 +102,6 @@ async def extract_structured_data(md_content):
         logging.error(f"Error in Ollama processing: {str(e)}")
         frappe.log_error(f"Error in Ollama processing: {str(e)}", "Ollama Extraction Error")
         return {}
-
 
 def save_fir_data(json_output, doc_id, file_url):
     """
@@ -105,7 +116,6 @@ def save_fir_data(json_output, doc_id, file_url):
                 setattr(doc, key, value)
 
         # Save the markdown file URL in the FIR document
-       
         doc.md_content = file_url
         doc.save()
         frappe.db.commit()
@@ -116,23 +126,40 @@ def save_fir_data(json_output, doc_id, file_url):
         logging.error(f"Error saving FIR data: {str(e)}")
         frappe.log_error(f"Error saving FIR data: {str(e)}", "FIR Data Save Error")
 
-
 @frappe.whitelist()
 def extract_text(file_url, doc_id):
     """
-    Fetch the file, run OCR processing, and save structured data in Frappe.
+    Enqueue OCR processing as a background job and return job ID.
     """
     try:
         # Retrieve file path from Frappe File Doctype
         file_doc = frappe.get_doc("File", {"file_url": file_url})
         file_path = frappe.get_site_path("private", "files", file_doc.file_name)
 
-        # Run the OCR processing asynchronously
-        asyncio.run(process_ocr(file_path, doc_id))
+        # Update initial status
+        doc = frappe.get_doc('FIR', doc_id)
+        doc.ocr_status = 'Queued'
+        doc.save()
+        frappe.db.commit()
 
-        return {"message": "Text extracted and saved successfully!"}
+        # Enqueue the OCR processing job
+        job = frappe.enqueue(
+            method=process_ocr,
+            queue='long',
+            timeout=1800,  # 30 minutes timeout
+            is_async=True,
+            job_id=doc_id,
+            file_path=file_path,
+            doc_id=doc_id
+        )
+
+        return {
+            "message": "OCR processing queued successfully!",
+            "job_id": job.id,
+            "status": "queued"
+        }
 
     except Exception as e:
         logging.error(f"Error in extract_text: {str(e)}")
-        frappe.log_error(f"Error in extract_text: {str(e)}", "OCR Extraction Error")
+        frappe.log_error(f"Error in extract_text: {str(e)}", "OCR Queue Error")
         return {"error": str(e)}
