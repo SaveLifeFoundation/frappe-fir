@@ -70,7 +70,9 @@ async def extract_structured_data(md_content):
     Use FastAPI (Ollama) to process and extract structured JSON data from the extracted Markdown content.
     """
     try:
-        prompt = frappe.get_doc("Config", "system_prompt")
+        config = frappe.get_doc("Config", "system_prompt")
+
+        prompt = config.system_prompt
         payload = {"query": md_content, "system_prompt": prompt}
 
         async with httpx.AsyncClient(timeout=900) as client:
