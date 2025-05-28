@@ -22,7 +22,7 @@ frappe.ui.form.on('FIR', {
                 frm.fields_dict.pdf_viewer.$wrapper.html('<p>No PDF available</p>');
             }
 
-			if (md_url.endsWith('.md')) {
+			if (md_url.endsWith('.txt')) {
                 frm.fields_dict.md_viewer.$wrapper.html(`
                     <iframe src="${md_url}" width="100%" height="600px" style="border: none;"></iframe>
                 `);
