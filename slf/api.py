@@ -92,10 +92,10 @@ def extract_structured_data(md_content):
             response = client.post(f"{llm_host}/ollama", json=payload, headers={"ngrok-skip-browser-warning": "true"})
             response.raise_for_status()
             json_output = response.json()
-            raw_response = json_output["response"]
+            raw_response = json_output["response"].strip()
             
-            if raw_response.startswith(" ```json\n") and raw_response.endswith("```"):
-                raw_response = raw_response[len(" ```json\n"):-4].strip()
+            if raw_response.startswith("```json\n") and raw_response.endswith("```"):
+                raw_response = raw_response[len("```json\n"):-4].strip()
             return json.loads(raw_response)
 
     except Exception as e:
